@@ -1,12 +1,25 @@
-from flask import Flask, Blueprint, request, jsonify, make_response
+from flask import Flask, request, jsonify
 from flask_mail import Mail, Message
 import requests
+from flask import Flask
+import os
 
 app = Flask(__name__)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['ADMIN_EMAIL'] = os.getenv('ADMIN_EMAIL')
+app.config['RECAPTCHA_SECRET_KEY'] = os.getenv('RECAPTCHA_SECRET_KEY')
+app.config['RECAPTCHA_VERIFY_URL'] = os.getenv('RECAPTCHA_VERIFY_URL')
+
 mail = Mail(app)
 
 def generate_email_template(subject, message, button_text=None, button_link=None, language="es"):
-        logo_url = "https://apidgalerydos.devtop.online/static/logo.png"
+        logo_url = "https://cdn.discordapp.com/attachments/1162049856769114154/1175882915486375936/Opera_Instantanea_2023-11-19_153822_www.figma.com-removebg-preview.png?ex=656cd94d&is=655a644d&hm=670aa71244bfb06ee7ebda0c8b358d1b03d50fc232fdf063ed46612ef944fd4c&"
         
         # Generamos el botón solo si ambos argumentos, texto y enlace, están presentes.
         button_html = ''
@@ -63,7 +76,7 @@ def contact_form():
         # Obtener los campos del formulario de contacto
         name = request.get_json().get("name", "")
         email = request.get_json().get("email", "").lower()
-        recaptcha_response = request.get_json().get("recaptchaResponse", "")
+        #recaptcha_response = request.get_json().get("recaptchaResponse", "")
         message = request.get_json().get("message", "")
         source = request.get_json().get("source", "")
 
@@ -74,7 +87,7 @@ def contact_form():
             return jsonify({"error": response_message}), 400
         
         # Verificar reCAPTCHA
-        if not verify_recaptcha(recaptcha_response):
+        #if not verify_recaptcha(recaptcha_response):
             response_message = "Invalid reCAPTCHA"
             return jsonify({"error": response_message}), 400
         
@@ -98,9 +111,8 @@ def verify_recaptcha(recaptcha_response):
 
     return result.get('success')
 
-def send_contact_email(name, email, message, source=None, language="es"):
-    print(f"Language in send_contact_email: {language}")
-
+def send_contact_email(name, email, message, source=None,):
+    
     subject = "Nuevo mensaje de contacto de " + name
     content = f'''
         Has recibido un nuevo mensaje de contacto:<br><br>
@@ -118,8 +130,9 @@ def send_contact_email(name, email, message, source=None, language="es"):
     with app.app_context():
         mail.send(msg)
 
-def generate_email_template(subject, content):
-    # Implement the logic to generate the email template
-    pass
+mail.init_app(app)
+
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0", port=5000)
 
 
