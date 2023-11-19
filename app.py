@@ -6,55 +6,55 @@ app = Flask(__name__)
 mail = Mail(app)
 
 def generate_email_template(subject, message, button_text=None, button_link=None, language="es"):
-    logo_url = "https://apidgalerydos.devtop.online/static/logo.png"
-    
-    # Generamos el botón solo si ambos argumentos, texto y enlace, están presentes.
-    button_html = ''
-    if button_text and button_link:
-        button_html = f'<a href="{button_link}" style="display:inline-block; padding: 10px 20px; color: #fff; background: linear-gradient(25deg, #000000 0%, #ff004f 100%); border-radius: 5px; text-decoration: none; font-size: 18px;">{button_text}</a>'
-    
-    return f'''
-    <!DOCTYPE html>
-    <html lang="{language}" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta name="x-apple-disable-message-reformatting">
-      <title>{subject}</title>
-      <style>
-        table, td, div, h1, p {{font-family: Arial, sans-serif;}}
-      </style>
-    </head>
-    <body style="margin:0;padding:0;">
-      <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
-        <tr>
-          <td align="center" style="padding:0;">
-            <table role="presentation" style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
-              <tr>
-                <td align="center" style="padding:40px 0 30px 0;background: linear-gradient(25deg, #000000 0%, #ff004f 100%);">
-                  <img src="{logo_url}" alt="Logo de la empresa" width="200" style="height:auto;display:block;" />
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:36px 30px 20px 30px;">
-                  <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
-                    <tr>
-                      <td style="padding:0 0 0 0;color:#153643;">
-                        <h1 style="font-size:24px;margin:0 0 20px 0;font-family: Arial, sans-serif;">{subject}</h1>
-                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family: Arial, sans-serif;">{message}</p>
-                        {button_html}
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+        logo_url = "https://apidgalerydos.devtop.online/static/logo.png"
+        
+        # Generamos el botón solo si ambos argumentos, texto y enlace, están presentes.
+        button_html = ''
+        if button_text and button_link:
+                button_html = f'<a href="{button_link}" style="display:inline-block; padding: 10px 20px; color: #fff; background: linear-gradient(25deg, #000000 0%, #ff004f 100%); border-radius: 5px; text-decoration: none; font-size: 18px;">{button_text}</a>'
+        
+        return f'''
+        <!DOCTYPE html>
+        <html lang="{language}" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="x-apple-disable-message-reformatting">
+            <title>{subject}</title>
+            <style>
+                table, td, div, h1, p {{font-family: Arial, sans-serif;}}
+            </style>
+        </head>
+        <body style="margin:0;padding:0;">
+            <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+                <tr>
+                    <td align="center" style="padding:0;">
+                        <table role="presentation" style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
+                            <tr>
+                                <td align="center" style="padding:40px 0 30px 0;background: linear-gradient(25deg, #000000 0%, #301080 100%);">
+                                    <img src="{logo_url}" alt="Logo de la empresa" width="200" style="height:auto;display:block;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:36px 30px 20px 30px;">
+                                    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                                        <tr>
+                                            <td style="padding:0 0 0 0;color:#153643;">
+                                                <h1 style="font-size:24px;margin:0 0 20px 0;font-family: Arial, sans-serif;">{subject}</h1>
+                                                <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family: Arial, sans-serif;">{message}</p>
+                                                {button_html}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table>
-          </td>
-        </tr>
-      </table>
-    </body>
-    </html>
-    '''
+        </body>
+        </html>
+        '''
 
 
 @app.route('/api/v1/contact', methods=['POST'])
