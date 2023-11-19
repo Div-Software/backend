@@ -76,7 +76,7 @@ def contact_form():
         # Obtener los campos del formulario de contacto
         name = request.get_json().get("name", "")
         email = request.get_json().get("email", "").lower()
-        #recaptcha_response = request.get_json().get("recaptchaResponse", "")
+        recaptcha_response = request.get_json().get("recaptchaResponse", "")
         message = request.get_json().get("message", "")
         source = request.get_json().get("source", "")
 
@@ -87,7 +87,7 @@ def contact_form():
             return jsonify({"error": response_message}), 400
         
         # Verificar reCAPTCHA
-        #if not verify_recaptcha(recaptcha_response):
+        if not verify_recaptcha(recaptcha_response):
             response_message = "Invalid reCAPTCHA"
             return jsonify({"error": response_message}), 400
         
