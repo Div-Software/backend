@@ -78,7 +78,6 @@ def contact_form():
         email = request.get_json().get("email", "").lower()
         recaptcha_response = request.get_json().get("recaptchaResponse", "")
         message = request.get_json().get("message", "")
-        source = request.get_json().get("source", "")
 
 
         # Validar campos requeridos
@@ -92,7 +91,7 @@ def contact_form():
             return jsonify({"error": response_message}), 400
         
         # Preparar el correo para el administrador
-        send_contact_email(name, email, message, source)
+        send_contact_email(name, email, message)
 
         response_message = "Contact message sent successfully"
         return jsonify({"message": response_message}), 200
