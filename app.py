@@ -70,7 +70,7 @@ def generate_email_template(subject, message, button_text=None, button_link=None
         '''
 
 
-@app.route('/api/v1/contact', methods=['POST'])
+@app.route('/div/contact', methods=['POST'])
 def contact_form():
     try:
         # Obtener los campos del formulario de contacto
