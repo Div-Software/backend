@@ -80,7 +80,7 @@ def contact_form():
         message = request.get_json().get("message", "")
 
 
-        # Validar campos requeridos
+        # Validar campos requeridoss
         if not all([name, email, message]):
             response_message = "Missing required fields"
             return jsonify({"error": response_message}), 400
