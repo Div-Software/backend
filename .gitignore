@@ -1,5 +1,4 @@
 .vercel
-<<<<<<< HEAD
 *.log
 *.pyc
 __pycache__
@@ -12,5 +11,3 @@ venv/
 ENV/ 
 env.bak/ 
 venv.bak/ 
-=======
->>>>>>> 2d44b190f16d2ef6ad950cdea6f7a9f986e456dd
