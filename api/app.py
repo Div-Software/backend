@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
-
+from flask_cors import cross_origin
 load_dotenv()
 
 from flask import Flask
@@ -72,7 +72,7 @@ def generate_email_template(subject, message, button_text=None, button_link=None
         </html>
         '''
 
-
+@cross_origin
 @app.route('/div/contact', methods=['POST'])
 def contact_form():
     try:
