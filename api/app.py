@@ -76,7 +76,7 @@ def contact_form():
         # Obtener los campos del formulario de contacto
         name = request.get_json().get("name", "")
         email = request.get_json().get("email", "").lower()
-        recaptcha_response = request.get_json().get("recaptchaResponse", "")
+        # recaptcha_response = request.get_json().get("recaptchaResponse", "")
         message = request.get_json().get("message", "")
 
 
@@ -86,9 +86,9 @@ def contact_form():
             return jsonify({"error": response_message}), 400
         
         # Verificar reCAPTCHA
-        if not verify_recaptcha(recaptcha_response):
-            response_message = "Invalid reCAPTCHA"
-            return jsonify({"error": response_message}), 400
+        # if not verify_recaptcha(recaptcha_response):
+        #     response_message = "Invalid reCAPTCHA"
+        #     return jsonify({"error": response_message}), 400
         
         # Preparar el correo para el administrador
         send_contact_email(name, email, message)
@@ -99,16 +99,16 @@ def contact_form():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-def verify_recaptcha(recaptcha_response):
-    payload = {
-        'secret': app.config['RECAPTCHA_SECRET_KEY'],
-        'response': recaptcha_response
-    }
+# def verify_recaptcha(recaptcha_response):
+#     payload = {
+#         'secret': app.config['RECAPTCHA_SECRET_KEY'],
+#         'response': recaptcha_response
+#     }
     
-    response = requests.post(app.config['RECAPTCHA_VERIFY_URL'], data=payload)
-    result = response.json()
+#     response = requests.post(app.config['RECAPTCHA_VERIFY_URL'], data=payload)
+#     result = response.json()
 
-    return result.get('success')
+#     return result.get('success')
 
 def send_contact_email(name, email, message, source=None,):
     
