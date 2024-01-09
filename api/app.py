@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
 from flask_cors import cross_origin
+from flask_cors import CORS
 load_dotenv()
 
 from flask import Flask
@@ -132,7 +133,10 @@ def send_contact_email(name, email, message, source=None,):
     with app.app_context():
         mail.send(msg)
 
+
 mail.init_app(app)
+CORS(app)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8000)))
